@@ -27,7 +27,6 @@ public class UserConverterCSVTest {
 
         User user = new User();
         user.setId("5049527c-070b-46d3-9109-85bf9b7e8b53");
-        user.setName("user - 5049527c-070b-46d3-9109-85bf9b7e8b53");
         user.setDevices(new HashSet<>(Arrays.asList("IPHONE")));
 
         final User userConverted = converter.convert(line);
@@ -37,7 +36,6 @@ public class UserConverterCSVTest {
 
     private void verify(final User user, final User userCovented) {
         assertThat(user.getId()).isEqualTo(userCovented.getId());
-        assertThat(user.getName()).isEqualTo(userCovented.getName());
         assertThat(user.getDevices()).isEqualTo(userCovented.getDevices());
     }
 }

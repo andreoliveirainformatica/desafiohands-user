@@ -15,7 +15,6 @@ public class UserConverterTest {
     public void convert() throws Exception {
        User user = new User();
        user.setId("12");
-       user.setName("User Name");
        user.setDevices(new HashSet<>(Arrays.asList("IPHONE", "SAMSUNG")));
 
        verify(user, UserResponse.builder(user) );
@@ -23,7 +22,6 @@ public class UserConverterTest {
 
     private void verify(final User user, final UserResponse userResponse) {
         assertThat(user.getId()).isEqualTo(userResponse.getId());
-        assertThat(user.getName()).isEqualTo(userResponse.getName());
         assertThat(user.getDevices()).isEqualTo(userResponse.getDevices());
     }
 

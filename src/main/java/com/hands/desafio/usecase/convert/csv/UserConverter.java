@@ -14,7 +14,6 @@ public class UserConverter implements Converter<String, User> {
         final String[] p = line.split(";");
         User user = new User();
         user.setId(p[0]);
-        user.setName("user - ".concat(p[0].trim()));
         user.setDevices(new HashSet<>(Arrays.asList(p[1].trim())));
         return user;
     }

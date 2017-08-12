@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/api/users")
 @Slf4j
 @AllArgsConstructor
-public class UserControler {
+public class UserController {
 
     private final UserService userService;
 

@@ -15,8 +15,6 @@ public class UserResponse implements Serializable {
     @Id
     private String id;
 
-    private String name;
-
     private Set<String> devices;
 
     public static UserResponse builder(final User user) {

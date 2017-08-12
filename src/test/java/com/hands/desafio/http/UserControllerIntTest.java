@@ -23,12 +23,13 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UserApplication.class)
-public class UserControlerIntTest {
+public class UserControllerIntTest {
 
     @Autowired
     private UserService userService;
@@ -40,7 +41,7 @@ public class UserControlerIntTest {
 
     @Before
     public void setup() {
-        UserControler userControler = new UserControler(userService);
+        UserController userController = new UserController(userService);
         ReflectionTestUtils.setField(userService, "userGateway",  userGateway);
 
         final StaticApplicationContext applicationContext = new StaticApplicationContext();
@@ -48,7 +49,7 @@ public class UserControlerIntTest {
         final WebMvcConfigurationSupport webMvcConfigurationSupport = new WebMvcConfigurationSupport();
         webMvcConfigurationSupport.setApplicationContext(applicationContext);
 
-        this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userControler)
+        this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userController)
                 .setHandlerExceptionResolvers(webMvcConfigurationSupport.handlerExceptionResolver())
                 .setMessageConverters(new MappingJackson2HttpMessageConverter())
                 .build();
@@ -66,19 +67,49 @@ public class UserControlerIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem("12")))
-                .andExpect(jsonPath("$.[*].name").value(hasItem("User Name")));
+                .andExpect(jsonPath("$.[*].id").value(hasItem("22")));
     }
 
+    @Test
+    public void getUsersById() throws Exception {
+        populateCache();
+        restUserMockMvc.perform(get("/api/users/12/user")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.id").value(is("12")));
+    }
+
+    @Test
+    public void getUsersByIdNotFound() throws Exception {
+        populateCache();
+        restUserMockMvc.perform(get("/api/users/13/user")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(status().isNotFound());
+    }
+
+//    @Test
+//    public void fileUploadTest() throws Exception {
+//        MockMultipartFile file = new MockMultipartFile("file", "orig", null, "5049527c-070b-46d3-9109-85bf9b7e8b53;IPHONE".getBytes());
+//
+//        HashMap<String, String> contentTypeParams = new HashMap<>();
+//        contentTypeParams.put("boundary", "265001916915724");
+//        MediaType mediaType = new MediaType("multipart", "form-data", contentTypeParams);
+//
+//        restUserMockMvc
+//                .perform(post("/api/users")
+//                .contentType(mediaType)
+//                        .content(file.getBytes()))
+//                .andExpect(status().isOk());
+//    }
 
     private void populateCache() {
         User user = new User();
         user.setId("12");
-        user.setName("User Name");
         user.setDevices(new HashSet<>(Arrays.asList("IPHONE", "SAMSUNG")));
 
         User user2 = new User();
         user2.setId("22");
-        user2.setName("User Name 22");
         user2.setDevices(new HashSet<>(Arrays.asList("MOTOROLA")));
 
         userGateway.save(user);
