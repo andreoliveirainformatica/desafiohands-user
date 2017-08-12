@@ -1,0 +1,14 @@
+server:
+  port: 8181
+spring:
+  application:
+    name: User
+  http:
+    multipart:
+      max-file-size: 40MB
+      max-request-size: 40MB
+springfox:
+  documentation:
+     swagger:
+        v2:
+          path: /extrato-0.0.1-SNAPSHOT/api-docs

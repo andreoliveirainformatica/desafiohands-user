@@ -1,0 +1,11 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: Extrato
+    maxThread: 4
+springfox:
+  documentation:
+     swagger:
+        v2:
+          path: /extrato-0.0.1-SNAPSHOT/api-docs
