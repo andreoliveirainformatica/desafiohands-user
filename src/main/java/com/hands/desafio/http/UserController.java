@@ -24,7 +24,6 @@ public class UserController {
 
     private final UserService userService;
 
-
     @ApiOperation(value = "user", nickname = "User Search")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = UserResponse.class),
@@ -62,4 +61,5 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

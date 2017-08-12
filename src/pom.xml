@@ -259,7 +259,7 @@
                 <configuration>
                     <images>
                         <image>
-                            <name>desafio_cielo</name>
+                            <name>desafio_hands</name>
                             <build>
                                 <dockerFile>Dockerfile</dockerFile>
                                 <assembly>

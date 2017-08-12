@@ -10,7 +10,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -55,4 +58,5 @@ public class UserServiceImpl implements UserService {
                                 })));
         matrixUsers.values().forEach(optUser -> optUser.ifPresent(user -> userGateway.save(user)));
     }
+
 }

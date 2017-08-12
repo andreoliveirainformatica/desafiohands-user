@@ -88,20 +88,6 @@ public class UserControllerIntTest {
                 .andExpect(status().isNotFound());
     }
 
-//    @Test
-//    public void fileUploadTest() throws Exception {
-//        MockMultipartFile file = new MockMultipartFile("file", "orig", null, "5049527c-070b-46d3-9109-85bf9b7e8b53;IPHONE".getBytes());
-//
-//        HashMap<String, String> contentTypeParams = new HashMap<>();
-//        contentTypeParams.put("boundary", "265001916915724");
-//        MediaType mediaType = new MediaType("multipart", "form-data", contentTypeParams);
-//
-//        restUserMockMvc
-//                .perform(post("/api/users")
-//                .contentType(mediaType)
-//                        .content(file.getBytes()))
-//                .andExpect(status().isOk());
-//    }
 
     private void populateCache() {
         User user = new User();
